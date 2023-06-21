@@ -19,36 +19,43 @@ if(screen.width > 480) {
 						let newItem = document.createElement("div")
 						newItem.className = "itemDiv"
 						let itemImg = document.createElement("img")
-						itemImg.src = "https://inventoryai.michael8910.repl.co/user-images/"+userData.Owns[i].Image
+						itemImg.src = "/user-images/"+userData.Owns[i].Image
 						newItem.appendChild(itemImg)
 						let itemName = document.createElement("p")
 						itemName.textContent = userData.Owns[i].Name
 						newItem.appendChild(itemName)
 						let itemValue = document.createElement("p")
-						itemValue.textContent = "$"+userData.Owns[i].Value
+						itemValue.textContent = `$${userData.Owns[i].Min} - $${userData.Owns[i].Max}`
+                        itemValue.className = "valueDisplay"
 						newItem.appendChild(itemValue)
-		
+                        if(userData.Owns[i].Quantity > 1) {
+                            let itemQuantity = document.createElement("p")
+                            itemQuantity.className = "quantityDisplay"
+                            itemQuantity.textContent = `x${userData.Owns[i].Quantity}`
+                            newItem.appendChild(itemQuantity)
+                        }
+                        newItem.dataset.i = i
+	
 						document.querySelector(".itemContainer").appendChild(newItem)
 						document.querySelector(".bottomSpace").remove()
 						document.querySelector(".itemContainer").innerHTML += `<div class="bottomSpace" style="margin-bottom: 40vw;"></div>`
 						updateValue()
 					}
-					if(document.querySelector(".itemDiv")) {
-						document.querySelectorAll(".itemDiv").forEach((e) => {
-							e.addEventListener("click", (e) => {
-								if(e.target.className == ".itemDiv") {
-									document.querySelector(".selectedImg").src = e.target.querySelector("img").src
-									document.querySelector(".selectedName").textContent = e.target.querySelectorAll("p")[0].textContent
-									document.querySelector(".selectedValue").textContent = e.target.querySelectorAll("p")[1].textContent
-								} else {
-									document.querySelector(".selectedImg").src = e.target.parentElement.querySelector("img").src
-									document.querySelector(".selectedName").textContent = e.target.parentElement.querySelectorAll("p")[0].textContent
-									document.querySelector(".selectedValue").textContent = e.target.parentElement.querySelectorAll("p")[1].textContent
-								}
-								renderFrame("10")
-							})
-						})
-					}
+
+                    if(document.querySelector(".itemDiv")) {
+                        document.querySelectorAll(".itemDiv").forEach((e) => {
+                            e.addEventListener("click", (c) => {
+                                let i = parseInt(e.dataset.i)
+                                document.querySelector(".selectedName").textContent = userData.Owns[i].Name
+                                document.querySelector(".selectedImg").src = "/user-images/"+userData.Owns[i].Image
+                                document.querySelector(".selectedValue").textContent = `Estimated Value: $${userData.Owns[i].Min} - $${userData.Owns[i].Max}`
+                                document.querySelector(".selectedQuantity").textContent = `Quantity: ${userData.Owns[i].Quantity}`
+                                document.querySelector(".selectedCondition").textContent = `Condition: ${userData.Owns[i].Condition}`
+                                renderFrame("10")
+                            })
+                        })
+                    }
+
 					displayLoading("none")
 				} else if(data.Code == 401) {
 					localStorage.removeItem("Private")
@@ -209,60 +216,48 @@ setInterval((e) => {
 	document.querySelector(".condition").textContent = "Condition - "+document.getElementById("conditionInput").value	
 }, 100)
 
-/*
-document.querySelector(".finalAddBtn").addEventListener("click", async (e) => {
-	let pass = true
-	let valueInput = document.getElementById("valueInput")
-	let nameInput = document.getElementById("nameInput")
-	valueInput.class = ""
-	nameInput.class = ""
-	valueInput.placeholder = "Value"
-	nameInput.placeholder = "Name"
-	
-	if(valueInput.value.split("").length == 0) {
-		valueInput.classList.add("badInput")
-		valueInput.value = ""
-		valueInput.placeholder = "Value - Feild Required"
-		pass = false
-	}
+let newName = ""
+let newCondition = ""
+let newMin = ""
+let newMax = ""
+let newImage = ""
 
-	if(nameInput.value.split("").length == 0) {
-		nameInput.classList.add("badInput")
-		nameInput.value = ""
-		nameInput.placeholder = "Name - Feild Required"
-		pass = false
-	}
+document.querySelector(".getValueBtn").addEventListener("click", (e) => {
+    newCondition = document.getElementById("conditionInput").value
+    newName = document.getElementById("nameInput").value
+    document.querySelector(".itemName").textContent = newName
+    document.getElementById("valuedImg").src = imageRef
+    displayLoading("block")
 
-	if(pass) {
-		if(document.querySelector(".emptyMsg")) {
-			document.querySelector(".emptyMsg").remove()
-		}
-
-		let fd = new FormData()
-		fd.append('upl', imageBlob, 'test.png')
-		fetch(`https://inventoryai.michael8910.repl.co/api/inventory?type=new&private=${localStorage.getItem("Private")}&name=${nameInput.value}&value=${valueInput.value}`, {
-            method: "POST",
-            body: fd
+    let fd = new FormData()
+	fd.append('upl', imageBlob, 'test.png')
+	fetch(`/api/get-value?name=${newName}&condition=${newCondition}`, {
+        method: "POST",
+        body: fd
+    })
+        .then(response => response.json())
+        .then(data => {
+            newMin = data.min
+            newMax = data.max
+            newImage = data.image
+            document.querySelector(".estimate").textContent = `Estimated Value: $${data.min} - $${data.max}`
+            renderFrame("11")
+            displayLoading("none")
         })
-		
-		let newItem = document.createElement("div")
-		newItem.className = "itemDiv"
-		let itemImg = document.createElement("img")
-		itemImg.src = imageRef
-		newItem.appendChild(itemImg)
-		let itemName = document.createElement("p")
-		itemName.textContent = nameInput.value
-		newItem.appendChild(itemName)
-		let itemValue = document.createElement("p")
-		itemValue.textContent = "$"+valueInput.value
-		newItem.appendChild(itemValue)
-		
-		document.querySelector(".itemContainer").appendChild(newItem)
-		document.querySelector(".bottomSpace").remove()
-		document.querySelector(".itemContainer").innerHTML += `<div class="bottomSpace" style="margin-bottom: 40vw;"></div>`
-		updateValue()
-		
-		renderFrame("4")
-	}
 })
-*/
+
+document.querySelector(".saveBtn").addEventListener("click", (e) => {
+    fetch(`/api/save-item?private=${localStorage.getItem("Private")}&name=${newName}&condition=${newCondition}&min=${newMin}&max=${newMax}&image=${newImage}&quantity=${document.getElementById("quantity").value}`)
+        .then(response => response.json())
+        .then(data => {
+            location.reload()
+        })
+})
+
+document.getElementById("deleteBtn").addEventListener("click", (e) => {
+    fetch(`/api/delete-item?private=${localStorage.getItem("Private")}&image=${document.querySelector(".selectedImg").src}`)
+        .then(response => response.json())
+        .then(data => {
+            location.reload()
+        })
+})
