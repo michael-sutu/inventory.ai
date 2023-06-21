@@ -64,7 +64,7 @@ function updateValue() {
         }
 	})
 
-	document.querySelector(".invValue").textContent = `$${minValue} - $${maxValue}`
+	document.querySelector(".invValue").textContent = `$${minValue.toFixed(2)} - $${maxValue.toFixed(2)}`
 }
 
 function utf8_to_b64(str) {
