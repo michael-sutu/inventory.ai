@@ -51,12 +51,20 @@ function clearInputs() {
 }
 
 function updateValue() {
-	let value = 0
+  let minValue = 0
+	let maxValue = 0
 	document.querySelectorAll(".itemDiv").forEach((e) => {
-		value += parseInt(e.querySelectorAll("p")[1].textContent.replace("$", ""))
+        let values = e.querySelectorAll("p")
+        if (values.length == 2) {
+            minValue += parseFloat(values[1].textContent.split("-")[0].replace("$", ""))
+		    maxValue += parseFloat(values[1].textContent.split("-")[1].replace("$", ""))
+        } else {
+            minValue += (parseFloat(values[1].textContent.split("-")[0].replace("$", "")) * parseFloat(values[2].textContent.replace("x", "")))
+		    maxValue += (parseFloat(values[1].textContent.split("-")[1].replace("$", "")) * parseFloat(values[2].textContent.replace("x", "")))
+        }
 	})
 
-	document.querySelector(".invValue").textContent = "$"+value
+	document.querySelector(".invValue").textContent = `$${minValue} - $${maxValue}`
 }
 
 function utf8_to_b64(str) {
