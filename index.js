@@ -1,8 +1,10 @@
 const express = require("express")
 const multer = require('multer')
 const path = require("path")
+const fs = require("fs")
 const { MongoClient, ServerApiVersion } = require('mongodb')
 const md5 = require('md5')
+const fetch = require("node-fetch-commonjs")
 const app = express()
 
 app.listen(1000)
@@ -154,6 +156,113 @@ app.post("/api/inventory", type, async (req, res) => {
 			res.json({"Code": 400, "Error": error})
 		}
 	}
+})
+
+app.get("/api/save-item", async (req, res) => {
+    try {
+        let updatedOwns = []
+		let newItem = {
+			"Image": req.query.image,
+			"Name": req.query.name,
+			"Min": req.query.min,
+            "Max": req.query.max,
+            "Quantity": req.query.quantity,
+            "Condition": req.query.condition
+		}
+		await client.connect()
+		const db = client.db("users")
+		let current = await db.collection("people").findOne({"Private": req.query.private})
+		if(current) {
+			current.Owns.push(newItem)
+			updatedOwns = current.Owns
+			await db.collection("people").updateOne({ Private: req.query.private }, { $set: { Owns: updatedOwns }})
+			res.json({"Code": 200, "Message": "Successfully added item to inventory."})
+		} else {
+			res.json({"Code": 401, "Error": "Unkown private key."})
+		}
+    } catch(error) {
+        console.log(error)
+        res.json({"Code": 400, "Error": error})
+    }
+})
+
+app.post("/api/get-value", type, (req, res) => {
+    let name = req.query.name
+    let condition = req.query.condition
+    let image = req.file.filename
+
+    let url = 'https://svcs.ebay.com/services/search/FindingService/v1'
+    let appID = 'MichaelS-inventor-PRD-f95f6f890-8fec23b2'
+    let request = {
+        'OPERATION-NAME': 'findCompletedItems',
+        'SERVICE-VERSION': '1.13.0',
+        'SECURITY-APPNAME': appID,
+        'RESPONSE-DATA-FORMAT': 'JSON',
+        'keywords': name,
+        'itemFilter(0).name': 'SoldItemsOnly',
+        'itemFilter(0).value': 'true'
+    }
+
+    let queryString = Object.keys(request)
+        .map(function(key) {
+            return key + '=' + encodeURIComponent(request[key])
+        })
+        .join('&')
+
+    fetch(url + '?' + queryString)
+        .then(function(response) {
+            if (response.ok) {
+                return response.json()
+            } else {
+                console.log(response)
+                throw new Error(response.status)
+            }
+        })
+        .then(function(data) {
+            let results = []
+            let items = data.findCompletedItemsResponse[0].searchResult[0].item
+
+            for(let i = 0; i < items.length; i++) {
+				results.push({"Name": items[i].title, "Price": items[i].sellingStatus[0].currentPrice[0].__value__, "Image": items[i].galleryURL})
+            }
+
+			fetch(`http://127.0.0.1:5000?condition=${condition}&start=http://localhost:1000/user-images/${image}`, {
+					method: "POST",
+					body: JSON.stringify(results)
+				})
+					.then(response => response.json())
+					.then(data => {
+						res.json({"min": data.min, "max": data.max, "image": req.file.filename})
+					})
+					.catch(error => console.log(error))
+        })
+        .catch(function(error) {
+            console.log(error.message)
+        })
+})
+
+app.get("/api/delete-item", async (req, res) => {
+    try {
+        let identifier = req.query.image.split("/")[req.query.image.split("/").length - 1]
+		await client.connect()
+		const db = client.db("users")
+		let current = await db.collection("people").findOne({"Private": req.query.private})
+		if(current) {
+            for(let i = 0; i < current.Owns.length; i++) {
+                if(current.Owns[i].Image == identifier) {
+                    current.Owns.splice(i, 1)
+                    break
+                }
+            }
+			await db.collection("people").updateOne({ Private: req.query.private }, { $set: { Owns: current.Owns }})
+			res.json({"Code": 200, "Message": "Successfully deleted item from inventory."})
+		} else {
+			res.json({"Code": 401, "Error": "Unkown private key."})
+		}
+    } catch(error) {
+        console.log(error)
+        res.json({"Code": 400, "Error": error})
+    }
 })
 
 app.get("*", (req, res) => {
