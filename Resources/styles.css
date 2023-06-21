@@ -431,3 +431,37 @@ input[type="range"]::-moz-range-thumb {
 	padding: 20px;
 	position: relative;
 }
+
+.estimate {
+    margin-top: 0px!important;
+    position: relative;
+    font-size: 50px!important;
+    border-radius: 5px;
+    background-color: #08171E;
+    padding: 20px;
+    width: 80vw;
+    left: 8vw;
+}
+
+.quantityDisplay {
+    width: 40%;
+    display: inline-block;
+    text-align: right;
+}
+
+.valueDisplay {
+    width: 40%;
+    display: inline-block;
+}
+
+#selected {
+    background-color: #08171E;
+    padding: 20px;
+    position: relative;
+    left: 8vw;
+    width: 80vw;
+    font-size: 35px;
+    border-radius: 5px;
+    top: 100px;
+    margin-top: -40px;
+}
