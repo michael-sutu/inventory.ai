@@ -25,7 +25,7 @@
     		<div class="bubble"></div>
     		<div class="bubble"></div>
     		<div class="bubble"></div>
-				<div class="bubble"></div>
+			<div class="bubble"></div>
     		<div class="bubble"></div>
     		<div class="bubble"></div>
     		<div class="bubble"></div>
@@ -35,7 +35,7 @@
     		<div class="bubble"></div>
     		<div class="bubble"></div>
     		<div class="bubble"></div>
-				<div class="bubble"></div>
+			<div class="bubble"></div>
     		<div class="bubble"></div>
     		<div class="bubble"></div>
     		<div class="bubble"></div>
@@ -45,7 +45,7 @@
     		<div class="bubble"></div>
     		<div class="bubble"></div>
     		<div class="bubble"></div>
-				<div class="bubble"></div>
+			<div class="bubble"></div>
     		<div class="bubble"></div>
     		<div class="bubble"></div>
     		<div class="bubble"></div>
@@ -153,7 +153,8 @@
 		<div id="7">
 			<div class="topDiv">
 				<nav>
-					<p>$0.00</p>
+					<p>$0</p>
+                    <button class="sellBtn">Sell Item</button>
 				</nav>
 				<div>
 					<p>You havn't sold any items yet.</p>
@@ -187,7 +188,7 @@
 				<input id="nameInput" placeholder="Name"><br>
 				<p style="margin-top: 25px; font-size: 50px;" class="condition">Condition - </p><br>
 				<input id="conditionInput" type="range"><br>
- 				<button style="top: -40px;">Get Value</button>
+ 				<button style="top: -40px;" class="getValueBtn">Get Value</button>
 			</div>
 		</div>
 
@@ -195,11 +196,24 @@
 			<div class="topDiv">
 				<h1 class="selectedName">Name</h1>
 				<img style="left: 0; margin-top: 0px; width: 80vw; height: 80vw;" class="selectedImg"><br>
-				<h1 class="selectedValue" style="margin-top: 60px;">$0</h1>
-				<button>Sell</button>
+				<p class="selectedValue" id="selected">Estimated Value: $ - $</p>
+                <p class="selectedQuantity" id="selected">Quantity: </p>
+                <p class="selectedCondition" id="selected">Condition: </p>
+				<button style="margin-top: 120px;" id="deleteBtn">Delete</button>
 				<button data-direct="4">Close</button>
 			</div>
 		</div>
+
+        <div id="11">
+            <div class="topDiv">
+				<h1 class="itemName">Name</h1>
+				<img class="finalizeImg" id="valuedImg" style="left: 0; margin-top: 0px; margin-bottom: 70px;"><br>
+				<p class="estimate">Estimate Value: $1 - $2.5</p>
+                <input placeholder="Quantity" type="number" id="quantity">
+ 				<button class="saveBtn">Save</button>
+                <button data-direct="4">Cancel</button>
+			</div>
+        </div>
 		<script src="/file/script.js"></script>
 	</body>
 </html>
