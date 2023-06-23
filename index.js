@@ -227,6 +227,7 @@ app.post("/api/get-value", type, (req, res) => {
             }
 
 			fetch(`https://feature-matching.onrender.com?condition=${condition}&start=https://inventory-ai.onrender.com/user-images/${image}`, {
+			//fetch(`http://127.0.0.1:5000?condition=${condition}&start=http://localhost:1000/user-images/${image}`, {
 					method: "POST",
 					body: JSON.stringify(results)
 				})
