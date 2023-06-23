@@ -23,17 +23,16 @@ if(screen.width > 480) {
 						newItem.appendChild(itemImg)
 						let itemName = document.createElement("p")
 						itemName.textContent = userData.Owns[i].Name
+						itemName.style = "overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
 						newItem.appendChild(itemName)
 						let itemValue = document.createElement("p")
+						itemValue.className = "valueDisplay"
 						itemValue.textContent = `$${userData.Owns[i].Min} - $${userData.Owns[i].Max}`
-                        itemValue.className = "valueDisplay"
 						newItem.appendChild(itemValue)
-                        if(userData.Owns[i].Quantity > 1) {
-                            let itemQuantity = document.createElement("p")
-                            itemQuantity.className = "quantityDisplay"
-                            itemQuantity.textContent = `x${userData.Owns[i].Quantity}`
-                            newItem.appendChild(itemQuantity)
-                        }
+                        let itemQuantity = document.createElement("p")
+                        itemQuantity.className = "quantityDisplay"
+                        itemQuantity.textContent = `x${userData.Owns[i].Quantity}`
+                        newItem.appendChild(itemQuantity)
                         newItem.dataset.i = i
 	
 						document.querySelector(".itemContainer").appendChild(newItem)
