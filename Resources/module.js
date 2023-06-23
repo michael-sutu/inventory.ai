@@ -56,11 +56,11 @@ function updateValue() {
 	document.querySelectorAll(".itemDiv").forEach((e) => {
         let values = e.querySelectorAll("p")
         if (values.length == 2) {
-            minValue += parseFloat(values[1].textContent.split("-")[0].replace("$", ""))
-		    maxValue += parseFloat(values[1].textContent.split("-")[1].replace("$", ""))
+          minValue += parseFloat(values[1].textContent.split("-")[0].replace("$", ""))
+		      maxValue += parseFloat(values[1].textContent.split("-")[1].replace("$", ""))
         } else {
-            minValue += (parseFloat(values[1].textContent.split("-")[0].replace("$", "")) * parseFloat(values[2].textContent.replace("x", "")))
-		    maxValue += (parseFloat(values[1].textContent.split("-")[1].replace("$", "")) * parseFloat(values[2].textContent.replace("x", "")))
+          minValue += (parseFloat(values[1].textContent.split("-")[0].replace("$", "")) * parseFloat(values[2].textContent.replace("x", "")))
+		      maxValue += (parseFloat(values[1].textContent.split("-")[1].replace("$", "")) * parseFloat(values[2].textContent.replace("x", "")))
         }
 	})
 
