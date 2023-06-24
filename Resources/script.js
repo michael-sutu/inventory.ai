@@ -246,7 +246,7 @@ document.querySelector(".getValueBtn").addEventListener("click", (e) => {
 			} else {
 				renderFrame("4")
 				displayLoading("none")
-				alert(data.Error)
+				alert(JSON.stringify(data.Error))
 			}
         })
 })
