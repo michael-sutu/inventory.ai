@@ -77,8 +77,8 @@
 			<img src="/image/title.png" class="mainTitle">
 			<div class="authDiv">
 				<h1>Welcome Back!</h1>
-				<input placeholder="Email" style="border-bottom: 1px solid white;" id="loginEmailInput"><br>
-				<input placeholder="Password" type="password" style="border-bottom: 1px solid white;" id="loginPasswordInput"><br>
+				<input data-original="Email" placeholder="Email" style="border-bottom: 1px solid white;" id="loginEmailInput"><br>
+				<input data-original="Password" placeholder="Password" type="password" style="border-bottom: 1px solid white;" id="loginPasswordInput"><br>
 				<button class="actionBtn" id="loginBtn">Login</button>
 			</div>
 			<p data-direct="3" style="font-size: 30px;">Don't have an account? Sign up</p>
@@ -88,8 +88,8 @@
 			<img src="/image/title.png" class="mainTitle">
 			<div class="authDiv">
 				<h1>Create Your Account.</h1>
-				<input placeholder="Email" id="emailInput" style="border-bottom: 1px solid white;"><br>
-				<input placeholder="Password" type="password" id="passwordInput" style="border-bottom: 1px solid white;"><br>
+				<input data-original="Email" placeholder="Email" id="emailInput" style="border-bottom: 1px solid white;"><br>
+				<input  data-original="Password" placeholder="Password" type="password" id="passwordInput" style="border-bottom: 1px solid white;"><br>
 				<button class="actionBtn" id="signUpBtn">Sign Up</button>
 			</div>
 			<p data-direct="2" style="font-size: 30px;">Already have an account? Login</p>
@@ -185,7 +185,7 @@
 			<div class="topDiv">
 				<h1>More Info</h1>
 				<img class="finalizeImg" style="left: 0; margin-top: 0px; margin-bottom: 70px;"><br>
-				<input id="nameInput" placeholder="Name"><br>
+				<input id="nameInput" placeholder="Name" data-original="Name"><br>
 				<p style="margin-top: 25px; font-size: 50px;" class="condition">Condition - </p><br>
 				<input id="conditionInput" type="range"><br>
  				<button style="top: -40px;" class="getValueBtn">Get Value</button>
@@ -209,7 +209,7 @@
 				<h1 class="itemName">Name</h1>
 				<img class="finalizeImg" id="valuedImg" style="left: 0; margin-top: 0px; margin-bottom: 70px;"><br>
 				<p class="estimate">Estimate Value: $1 - $2.5</p>
-                <input placeholder="Quantity" type="number" id="quantity">
+                <input placeholder="Quantity" type="number" id="quantity" data-original="Quantity">
  				<button class="saveBtn">Save</button>
                 <button data-direct="4">Cancel</button>
 			</div>
