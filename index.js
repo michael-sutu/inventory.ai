@@ -8,12 +8,8 @@ const md5 = require('md5')
 const fetch = require("node-fetch-commonjs")
 const app = express()
 
-app.listen(1000)
+app.listen(5000)
 console.log("Listening at http://localhost:1000")
-
-concurrently([
-	{ command: 'cd Feature-Matching && python main.py', name: 'Flask Server', prefixColor: 'cyan' } // gunicorn main:app
-])
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -230,7 +226,7 @@ app.post("/api/get-value", type, (req, res) => {
 				results.push({"Name": items[i].title, "Price": items[i].sellingStatus[0].currentPrice[0].__value__, "Image": items[i].galleryURL})
             }
 
-			fetch(`https://inventory-ai.onrender.com/calculate?condition=${condition}&start=https://inventory-ai.onrender.com/user-images/${image}`, {
+			fetch(`https://feature-matching.onrender.com?condition=${condition}&start=https://inventory-ai.onrender.com/user-images/${image}`, {
 					method: "POST",
 					body: JSON.stringify(results)
 				})
