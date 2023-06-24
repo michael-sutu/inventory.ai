@@ -8,6 +8,9 @@ function renderFrame(newFrameId) {
 	document.querySelectorAll("input").forEach((e) => {
 		e.value = ""
 		e.className = ""
+    if(e.dataset.original !== undefined) {
+      e.placeholder = e.dataset.original
+    }
 	})
 }
 
