@@ -465,3 +465,31 @@ input[type="range"]::-moz-range-thumb {
     top: 100px;
     margin-top: -40px;
 }
+
+.alert {
+	bottom: 250px;
+	position: absolute;
+	background-color: #08171E;
+	z-index: 1;
+	left: 5vw;
+	width: 90vw;
+	border-radius: 5px;
+	font-size: 40px;
+	font-weight: bold;
+	color: red;
+}
+
+.alert > * {
+	display: inline-block;
+}
+
+.alert > button {
+	font-size: 80px;
+	background-color: rgb(0, 0, 0, 0);
+	border-width: 0px;
+	font-weight: bold;
+	color: red;
+	position: absolute;
+	right: 25px;
+	top: 25px;
+}
