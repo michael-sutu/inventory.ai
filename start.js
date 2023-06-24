@@ -10,9 +10,12 @@ async function runCommands() {
         { command: 'node index.js', name: 'Node.js Server', prefixColor: 'cyan' }
       ])
   
-      await concurrently([
-        { command: 'gunicorn main:app', name: 'Flask Server', prefixColor: 'cyan' }
-      ])
+      setTimeout(async (e) => {
+        await concurrently([
+            { command: 'gunicorn main:app', name: 'Flask Server', prefixColor: 'cyan' }
+        ])
+      }, 60000)
+      
   
       console.log('All commands completed successfully.')
     } catch (error) {
