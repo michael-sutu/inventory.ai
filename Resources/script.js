@@ -226,33 +226,39 @@ let newMax = ""
 let newImage = ""
 
 document.querySelector(".getValueBtn").addEventListener("click", (e) => {
-    newCondition = document.getElementById("conditionInput").value
-    newName = document.getElementById("nameInput").value
-    document.querySelector(".itemName").textContent = newName
-    document.getElementById("valuedImg").src = imageRef
-    displayLoading("block")
+	newName = document.getElementById("nameInput").value
+	if(newName !== "") {
+		newCondition = document.getElementById("conditionInput").value
+    	document.querySelector(".itemName").textContent = newName
+    	document.getElementById("valuedImg").src = imageRef
+    	displayLoading("block")
 
-    let fd = new FormData()
-	fd.append('upl', imageBlob, 'test.png')
-	fetch(`/api/get-value?name=${newName}&condition=${newCondition}`, {
-        method: "POST",
-        body: fd
-    })
-        .then(response => response.json())
-        .then(data => {
-			if(data.Code == 200) {
-				newMin = data.min
-            	newMax = data.max
-            	newImage = data.image
-            	document.querySelector(".estimate").textContent = `Estimated Value: $${data.min} - $${data.max}`
-            	renderFrame("11")
-            	displayLoading("none")
-			} else {
-				renderFrame("4")
-				displayLoading("none")
-				displayAlert()
-			}
-        })
+    	let fd = new FormData()
+		fd.append('upl', imageBlob, 'test.png')
+		fetch(`/api/get-value?name=${newName}&condition=${newCondition}`, {
+        	method: "POST",
+        	body: fd
+    	})
+        	.then(response => response.json())
+        	.then(data => {
+				if(data.Code == 200) {
+					newMin = data.min
+            		newMax = data.max
+            		newImage = data.image
+            		document.querySelector(".estimate").textContent = `Estimated Value: $${data.min} - $${data.max}`
+            		renderFrame("11")
+            		displayLoading("none")
+				} else {
+					renderFrame("4")
+					displayLoading("none")
+					displayAlert()
+				}
+        	})
+	} else {
+		document.getElementById("nameInput").placeholder = "Name - Required"
+		document.getElementById("nameInput").classList.add('badInput2')
+		document.getElementById("nameInput").value = ""
+	}
 })
 
 document.querySelector(".saveBtn").addEventListener("click", (e) => {
