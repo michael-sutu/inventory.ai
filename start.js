@@ -1,6 +1,23 @@
 const concurrently = require('concurrently')
-const { result } = concurrently([
-    { command: 'pip install -r install.txt', name: 'Flask Build', prefixColor: 'cyan' },
-    { command: 'node index.js', name: 'Node.js Server', prefixColor: 'cyan' },
-    { command: 'gunicorn main:app', name: 'Flask Server', prefixColor: 'cyan' }
-])
+
+async function runCommands() {
+    try {
+      await concurrently([
+        { command: 'pip install -r install.txt', name: 'Flask Build', prefixColor: 'cyan' }
+      ])
+  
+      await concurrently([
+        { command: 'node index.js', name: 'Node.js Server', prefixColor: 'cyan' }
+      ])
+  
+      await concurrently([
+        { command: 'gunicorn main:app', name: 'Flask Server', prefixColor: 'cyan' }
+      ])
+  
+      console.log('All commands completed successfully.')
+    } catch (error) {
+      console.error('One or more commands failed:', error)
+    }
+}
+  
+runCommands()
