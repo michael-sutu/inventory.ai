@@ -244,9 +244,9 @@ document.querySelector(".getValueBtn").addEventListener("click", (e) => {
             	renderFrame("11")
             	displayLoading("none")
 			} else {
-				alert(data.Error)
 				renderFrame("4")
 				displayLoading("none")
+				alert(data.Error)
 			}
         })
 })
