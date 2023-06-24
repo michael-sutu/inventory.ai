@@ -1,4 +1,4 @@
 Flask
 opencv-python
 urllib3
-gunicorn
+gunicorn==19.9.0
