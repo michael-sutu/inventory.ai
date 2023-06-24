@@ -14,7 +14,7 @@ async function runCommands() {
         await concurrently([
             { command: 'gunicorn main:app', name: 'Flask Server', prefixColor: 'cyan' }
         ])
-      }, 60000)
+      }, 120000)
       
   
       console.log('All commands completed successfully.')
