@@ -1,278 +1,223 @@
-const express = require("express")
-const concurrently = require('concurrently')
-const multer = require('multer')
-const path = require("path")
-const fs = require("fs")
-const { MongoClient, ServerApiVersion } = require('mongodb')
-const md5 = require('md5')
-const fetch = require("node-fetch-commonjs")
-const app = express()
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Inventory.ai</title>
+		<link rel="icon" type="image/x-icon" href="/image/favicon.png">
+		<link rel="stylesheet" href="/file/styles.css"></link>
+		<link rel="stylesheet" href="/file/bubbles.css"></link>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Comme&family=Poppins:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+		<script src="/file/module.js"></script>
+	</head>
+	<body>
+		<div class="background" style="background-image: linear-gradient(to bottom, #0e2027, #020D14); background-color: #020D14;"></div>
+		
+		<section class="sticky">
+  		<div class="bubbles">
+      	<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+			<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+			<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+			<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+    		<div class="bubble"></div>
+  		</div>
+		</section>
 
-app.listen(5000)
-console.log("Listening at http://localhost:1000")
+		<div class="loadingFrame"><div></div></div>
 
-let storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, __dirname + '/Resources/User-Images/')
-  },
-  filename: function (req, file, cb) {
-    const extension = path.extname(file.originalname)
-    cb(null, Date.now() + extension)
-  }
-})
+		<div class="alert">
+			<p>An error has occured.</p>
+		</div>
 
-let upload = multer({ storage: storage })
-let type = upload.single('upl')
+		<div id="0">
+			<img src="/image/title.png" class="mainTitle" style="width: 40%;">
+			<div class="authDiv">
+				<h1 style="font-size: 30px;">Sorry but... you need to be on a mobile device to access this app.</h1>
+			</div>
+		</div>
+		
+		<div id="1">
+			<img src="/image/logo.png" class="mainLogo">
+			<button class="authBtn" data-direct="2" style="bottom: 200px;">Login</button>
+			<button class="authBtn" data-direct="3">Sign Up</button>
+		</div>
+		
+		<div id="2">
+			<img src="/image/title.png" class="mainTitle">
+			<div class="authDiv">
+				<h1>Welcome Back!</h1>
+				<input data-original="Email" placeholder="Email" style="border-bottom: 1px solid white;" id="loginEmailInput"><br>
+				<input data-original="Password" placeholder="Password" type="password" style="border-bottom: 1px solid white;" id="loginPasswordInput"><br>
+				<button class="actionBtn" id="loginBtn">Login</button>
+			</div>
+			<p data-direct="3" style="font-size: 30px;">Don't have an account? Sign up</p>
+		</div>
+		
+		<div id="3">
+			<img src="/image/title.png" class="mainTitle">
+			<div class="authDiv">
+				<h1>Create Your Account.</h1>
+				<input data-original="Email" placeholder="Email" id="emailInput" style="border-bottom: 1px solid white;"><br>
+				<input  data-original="Password" placeholder="Password" type="password" id="passwordInput" style="border-bottom: 1px solid white;"><br>
+				<button class="actionBtn" id="signUpBtn">Sign Up</button>
+			</div>
+			<p data-direct="2" style="font-size: 30px;">Already have an account? Login</p>
+		</div>
 
-const url = "mongodb+srv://michaelsutu:AJV95ixy12LSkBfA@inventoryai.1lwuiqu.mongodb.net/?retryWrites=true&w=majority"
-const client = new MongoClient(url)
+		<div id="4">
+			<div class="topDiv">
+				<nav>
+					<p class="invValue">$0</p>
+					<button data-direct="8" class="addBtn">Add Item</button>
+				</nav>
+				<div class="itemContainer">
+					<p class="emptyMsg">You havn't added any items yet.</p>
+					<div class="bottomSpace" style="margin-bottom: 40vw;"></div>
+				</div>
+			</div>
+			<div class="navDiv">
+				<img src="image/xsold.png" data-direct="7">
+				<img src="image/box.png">
+				<img src="image/xaccounts.png" data-direct="6">
+				<img src="image/xsettings.png" data-direct="5">
+			</div>
+		</div>
 
-function sendF(file, res) {
-	return res.sendFile(__dirname+`/${file}`)
-}
+		<div id="5">
+			<div class="topDiv">
+				<h1>Settings</h1>
+				<h2>Account</h2>
+				<div class="emailDiv">
+					<p id="emailDisplay" style="margin-top: 0px;"></p>
+					<button id="logoutBtn">Logout</button>
+				</div>
+				<h2>Platforms</h2>
+				<div class="platformDiv">
+					<img src="/image/ebay.png">
+					<p>Ebay</p>
+				</div>
+			</div>
+			<div class="navDiv">
+				<img src="image/xsold.png" data-direct="7">
+				<img src="image/xbox.png" data-direct="4">
+				<img src="image/xaccounts.png" data-direct="6">
+				<img src="image/settings.png">
+			</div>
+		</div>
 
-function makeid(length) {
-  let result = ''
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  const charactersLength = characters.length
-  let counter = 0
-  while (counter < length) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength))
-    counter += 1
-  }
-  return result
-}
+		<div id="6">
+			<div class="topDiv">
+				<h1>Your Accounts</h1>
+				<p>You don't have any accounts yet.</p>
+				<button>Add Account</button>
+			</div>
+			<div class="navDiv">
+				<img src="image/xsold.png" data-direct="7">
+				<img src="image/xbox.png" data-direct="4">
+				<img src="image/accounts.png">
+				<img src="image/xsettings.png" data-direct="5"> 
+			</div>
+		</div>
 
-app.get("/", (req, res) => {
-	sendF("Public/index.html", res)
-})
+		<div id="7">
+			<div class="topDiv">
+				<nav>
+					<p>$0</p>
+                    <button class="sellBtn">Sell Item</button>
+				</nav>
+				<div>
+					<p>You havn't sold any items yet.</p>
+				</div>
+			</div>
+			<div class="navDiv">
+				<img src="image/sold.png">
+				<img src="image/xbox.png" data-direct="4">
+				<img src="image/xaccounts.png" data-direct="6">
+				<img src="image/xsettings.png" data-direct="5">
+			</div>
+		</div>
 
-let validFiles = ["script.js", "styles.css", "module.js", "bubbles.css"]
-app.get("/file/:path", (req, res) => {
-	if(validFiles.includes(req.params.path)) {
-		sendF("Resources/"+req.params.path, res)
-	} else {
-		res.json({"Code": 404, "Message": "Page not found."})
-	}
-})
+		<div id="8">
+			<div class="topDiv">
+				<h1>Take a picture of your item.</h1>
+				<div class="video">
+					<div class="videoLoad"></div>
+					<canvas></canvas>
+					<video muted autoplay id="video" autoplay muted hidden playsinline></video>
+				</div>
+				<button class="streamCloser" data-direct="9">Take Picture</button>
+				<button data-direct="4" class="streamCloser">Cancel</button>
+			</div>
+		</div>
 
-let validImages = ["logo.png", "favicon.png", "title.png", "google.png", "facebook.png", "placeholder.png", "placeholder2.png", "xsold.png", "sold.png", "xsettings.png", "settings.png", "xaccounts.png", "accounts.png", "xbox.png", "box.png", "balance.png", "xbalance.png", "amazon.jpg", "bonanza.png", "ebay.png"]
-app.get("/image/:path", (req, res) => {
-	if(validImages.includes(req.params.path)) {
-		sendF("Resources/Images/"+req.params.path, res)
-	} else {
-		res.json({"Code": 404, "Message": "Page not found."})
-	}
-})
+		<div id="9">
+			<div class="topDiv">
+				<h1>More Info</h1>
+				<img class="finalizeImg" style="left: 0; margin-top: 0px; margin-bottom: 70px;"><br>
+				<input id="nameInput" placeholder="Name" data-original="Name"><br>
+				<p style="margin-top: 0px; font-size: 50px;" class="condition">Condition - </p><br>
+				<input id="conditionInput" type="range"><br>
+ 				<button style="top: -40px;" class="getValueBtn">Get Value</button>
+			</div>
+		</div>
 
-app.get("/user-images/:path", (req, res) => {
-	sendF("Resources/User-Images/"+req.params.path, res)
-})
+		<div id="10">
+			<div class="topDiv">
+				<h1 class="selectedName">Name</h1>
+				<img style="left: 0; margin-top: 0px; width: 80vw; height: 80vw;" class="selectedImg"><br>
+				<p class="selectedValue" id="selected">Estimated Value: $ - $</p>
+                <p class="selectedQuantity" id="selected">Quantity: </p>
+                <p class="selectedCondition" id="selected">Condition: </p>
+				<button style="margin-top: 120px;" id="deleteBtn">Delete</button>
+				<button data-direct="4">Close</button>
+			</div>
+		</div>
 
-app.get("/api/account", async (req, res) => {
-	let action = req.query.type
-	if(action == "new") {
-		await client.connect()
-		const db = client.db("users")
-		let current = await db.collection("people").findOne({"Email": req.query.email})
-		if(current == null) {
-			let pass = true
-			let private = makeid(15)
-			try {
-				await db.collection("people").insertOne({
-  				"Email": req.query.email,
-					"Password": req.query.password,
-					"Id": makeid(7),
-					"Private": private,
-					"Owns": []
-				})
-			} catch(error) {
-				pass = false
-				console.log(error)
-				res.json({"Code": 400, "Error": error})
-			}
-			if(pass == true) {
-				res.json({"Code": 200, "Message": "Successfully created new account.", "Private": private})
-			}
-		} else {
-			res.json({"Code": 401, "Error": "Email is already in use."})
-		}
-	} else if(action == "login") {
-		try {
-			const db = client.db("users")
-			let final = await db.collection("people").findOne({"Email": req.query.email})
-      if(final == null) {
-       	 res.json({"Code": 401.1, "Error": "Unknown email."})
-      } else {
-        if(final.Password == req.query.password) {
-        	res.json({"Code": 200, "Message": "Login Successful.", "Private": final.Private})
-        } else {
-          res.json({"Code": 401.2, "Error": "Invalid password."})
-        }
-      }
-		} catch(error) {
-			console.log(error)
-			res.json({"Code": 400, "Error": error})
-		}
-	} else if(action == "get") {
-		try {
-			await client.connect()
-			const db = client.db("users")
-			let pulled = await db.collection("people").findOne({"Private": req.query.private})
-			if(pulled == null) {
-				res.json({"Code": 401, "Error": "Unknown private."})
-			} else {
-				res.json({"Code": 200, "Data": {"Email": pulled.Email, "Owns": pulled.Owns}, "Message": "Successfully pulled user data."})
-			}
-		} catch(error) {
-			console.log(error)
-			res.json({"Code": 400, "Error": error})
-		}
-	}
-})
-
-app.post("/api/inventory", type, async (req, res) => {
-	let action = req.query.type
-	if(action == "new") {
-		try {
-			let updatedOwns = []
-			let newItem = {
-				"Image": req.file.filename,
-				"Name": req.query.name,
-				"Value": req.query.value
-			}
-			await client.connect()
-			const db = client.db("users")
-			let current = await db.collection("people").findOne({"Private": req.query.private})
-			if(current) {
-				current.Owns.push(newItem)
-				updatedOwns = current.Owns
-				const result = await db.collection("people").updateOne({ Private: req.query.private }, { $set: { Owns: updatedOwns }})
-				res.json({"Code": 200, "Message": "Successfully added item to inventory."})
-			} else {
-				res.json({"Code": 401, "Error": "Unkown private key."})
-			}
-		} catch(error) {
-			console.log(error)
-			res.json({"Code": 400, "Error": error})
-		}
-	}
-})
-
-app.get("/api/save-item", async (req, res) => {
-    try {
-        let updatedOwns = []
-		let newItem = {
-			"Image": req.query.image,
-			"Name": req.query.name,
-			"Min": req.query.min,
-            "Max": req.query.max,
-            "Quantity": req.query.quantity,
-            "Condition": req.query.condition
-		}
-		await client.connect()
-		const db = client.db("users")
-		let current = await db.collection("people").findOne({"Private": req.query.private})
-		if(current) {
-			current.Owns.push(newItem)
-			updatedOwns = current.Owns
-			await db.collection("people").updateOne({ Private: req.query.private }, { $set: { Owns: updatedOwns }})
-			res.json({"Code": 200, "Message": "Successfully added item to inventory."})
-		} else {
-			res.json({"Code": 401, "Error": "Unkown private key."})
-		}
-    } catch(error) {
-        console.log(error)
-        res.json({"Code": 400, "Error": error})
-    }
-})
-
-app.post("/api/get-value", type, (req, res) => {
-    let name = req.query.name
-    let condition = req.query.condition
-    let image = req.file.filename
-
-    let url = 'https://svcs.ebay.com/services/search/FindingService/v1'
-    let appID = 'MichaelS-inventor-PRD-f95f6f890-8fec23b2'
-    let request = {
-        'OPERATION-NAME': 'findCompletedItems',
-        'SERVICE-VERSION': '1.13.0',
-        'SECURITY-APPNAME': appID,
-        'RESPONSE-DATA-FORMAT': 'JSON',
-        'keywords': name,
-        'itemFilter(0).name': 'SoldItemsOnly',
-        'itemFilter(0).value': 'true'
-    }
-
-    let queryString = Object.keys(request)
-        .map(function(key) {
-            return key + '=' + encodeURIComponent(request[key])
-        })
-        .join('&')
-
-    fetch(url + '?' + queryString)
-        .then(function(response) {
-            if (response.ok) {
-                return response.json()
-            } else {
-                console.log(response)
-                throw new Error(response.status)
-            }
-        })
-        .then(function(data) {
-			let results = []
-            let items = data.findCompletedItemsResponse[0].searchResult[0].item
-            for(let i = 0; i < items.length; i++) {
-				results.push({"Name": items[i].title, "Price": items[i].sellingStatus[0].currentPrice[0].__value__, "Image": items[i].galleryURL})
-            }
-
-			fetch(`https://feature-matching.onrender.com?condition=${condition}&start=https://inventory-ai.onrender.com/user-images/${image}`, {
-					method: "POST",
-					body: JSON.stringify(results)
-				})
-					.then(response => response.json())
-					.then(data => {
-						if(data.min == -1) {
-							res.json({"Code": 400, "Error": data.Error})
-						} else {
-							res.json({"Code": 200, "min": data.min, "max": data.max, "image": req.file.filename})
-						}	
-					})
-					.catch(error => {
-						console.log(error)
-						res.json({"Code": 400, "Error": error})
-					})
-        })
-        .catch(function(error) {
-            console.log(error.message)
-			res.json({"Code": 400, "Error": error.message})
-        })
-})
-
-app.get("/api/delete-item", async (req, res) => {
-    try {
-        let identifier = req.query.image.split("/")[req.query.image.split("/").length - 1]
-		await client.connect()
-		const db = client.db("users")
-		let current = await db.collection("people").findOne({"Private": req.query.private})
-		if(current) {
-            for(let i = 0; i < current.Owns.length; i++) {
-                if(current.Owns[i].Image == identifier) {
-                    current.Owns.splice(i, 1)
-                    break
-                }
-            }
-			await db.collection("people").updateOne({ Private: req.query.private }, { $set: { Owns: current.Owns }})
-			res.json({"Code": 200, "Message": "Successfully deleted item from inventory."})
-		} else {
-			res.json({"Code": 401, "Error": "Unkown private key."})
-		}
-    } catch(error) {
-        console.log(error)
-        res.json({"Code": 400, "Error": error})
-    }
-})
-
-app.get("*", (req, res) => {
-	res.json({"Code": 404, "Message": "Page not found."})
-})
+        <div id="11">
+            <div class="topDiv">
+				<h1 class="itemName">Name</h1>
+				<img class="finalizeImg" id="valuedImg" style="left: 0; margin-top: 0px; margin-bottom: 70px;"><br>
+				<p class="estimate">Estimate Value: $1 - $2.5</p>
+                <input placeholder="Quantity" type="number" id="quantity" data-original="Quantity" style="margin-top: -15px;">
+ 				<button class="saveBtn">Save</button>
+                <button data-direct="4">Cancel</button>
+			</div>
+        </div>
+		<script src="/file/script.js"></script>
+	</body>
+</html>
