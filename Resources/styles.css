@@ -482,14 +482,3 @@ input[type="range"]::-moz-range-thumb {
 .alert > * {
 	display: inline-block;
 }
-
-.alert > button {
-	font-size: 80px;
-	background-color: rgb(0, 0, 0, 0);
-	border-width: 0px;
-	font-weight: bold;
-	color: red;
-	position: absolute;
-	right: 25px;
-	top: 25px;
-}
