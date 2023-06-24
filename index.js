@@ -233,9 +233,16 @@ app.post("/api/get-value", type, (req, res) => {
 				})
 					.then(response => response.json())
 					.then(data => {
-						res.json({"min": data.min, "max": data.max, "image": req.file.filename})
+						if(data.min == -1) {
+							res.json({"Code": 400, "Error": data.Error})
+						} else {
+							res.json({"Code": 200, "min": data.min, "max": data.max, "image": req.file.filename})
+						}	
 					})
-					.catch(error => console.log(error))
+					.catch(error => {
+						console.log(error)
+						res.json({"Code": 400, "Error": error})
+					})
         })
         .catch(function(error) {
             console.log(error.message)
