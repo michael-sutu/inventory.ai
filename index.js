@@ -219,17 +219,12 @@ app.post("/api/get-value", type, (req, res) => {
             }
         })
         .then(function(data) {
-			try {
-				let results = []
-            	let items = data.findCompletedItemsResponse[0].searchResult[0].item
-
-            	for(let i = 0; i < items.length; i++) {
-					results.push({"Name": items[i].title, "Price": items[i].sellingStatus[0].currentPrice[0].__value__, "Image": items[i].galleryURL})
-            	}
-			} catch(error) {
-				res.json({"Code": 400, "Error": error.message})
-			}
-
+			let results = []
+            let items = data.findCompletedItemsResponse[0].searchResult[0].item
+            for(let i = 0; i < items.length; i++) {
+				results.push({"Name": items[i].title, "Price": items[i].sellingStatus[0].currentPrice[0].__value__, "Image": items[i].galleryURL})
+            }
+			
 			fetch(`https://feature-matching.onrender.com?condition=${condition}&start=https://inventory-ai.onrender.com/user-images/${image}`, {
 			//fetch(`http://127.0.0.1:5000?condition=${condition}&start=http://localhost:1000/user-images/${image}`, {
 					method: "POST",
@@ -250,6 +245,7 @@ app.post("/api/get-value", type, (req, res) => {
         })
         .catch(function(error) {
             console.log(error.message)
+			res.json({"Code": 400, "Error": error.message})
         })
 })
 
