@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "(cd Feature-Matching && python3 -m pip install -r install.txt) & npm install",
+    "build": "npm install",
     "start": "index.js"
   },
   "keywords": [],
