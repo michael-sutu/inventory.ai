@@ -227,7 +227,7 @@ app.post("/api/get-value", type, (req, res) => {
 					results.push({"Name": items[i].title, "Price": items[i].sellingStatus[0].currentPrice[0].__value__, "Image": items[i].galleryURL})
             	}
 			} catch(error) {
-				res.json({"Code": 400, "Error": error})
+				res.json({"Code": 400, "Error": error.message})
 			}
 
 			fetch(`https://feature-matching.onrender.com?condition=${condition}&start=https://inventory-ai.onrender.com/user-images/${image}`, {
