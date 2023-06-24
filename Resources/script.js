@@ -1,5 +1,9 @@
 let userData = {}
 
+function displayAlert() {
+	document.querySelector(".alert").style.display = "block"
+}
+
 if(screen.width > 480) {
 	renderFrame("0")
 } else {
@@ -246,7 +250,7 @@ document.querySelector(".getValueBtn").addEventListener("click", (e) => {
 			} else {
 				renderFrame("4")
 				displayLoading("none")
-				alert(JSON.stringify(data.Error))
+				displayAlert()
 			}
         })
 })
@@ -265,4 +269,8 @@ document.getElementById("deleteBtn").addEventListener("click", (e) => {
         .then(data => {
             location.reload()
         })
+})
+
+document.querySelector(".alertClose").addEventListener("click", (e) => {
+	document.querySelector(".alert").style.display = "none"
 })
