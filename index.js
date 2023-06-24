@@ -1,4 +1,5 @@
 const express = require("express")
+const concurrently = require('concurrently')
 const multer = require('multer')
 const path = require("path")
 const fs = require("fs")
@@ -9,6 +10,10 @@ const app = express()
 
 app.listen(1000)
 console.log("Listening at http://localhost:1000")
+
+concurrently([
+	{ command: 'gunicorn main:app', name: 'Flask Server', prefixColor: 'cyan' }
+])
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
