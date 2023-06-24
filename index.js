@@ -224,9 +224,8 @@ app.post("/api/get-value", type, (req, res) => {
             for(let i = 0; i < items.length; i++) {
 				results.push({"Name": items[i].title, "Price": items[i].sellingStatus[0].currentPrice[0].__value__, "Image": items[i].galleryURL})
             }
-			
-			fetch(`https://feature-matching.onrender.com?condition=${condition}&start=https://inventory-ai.onrender.com/user-images/${image}`, {
-			//fetch(`http://127.0.0.1:5000?condition=${condition}&start=http://localhost:1000/user-images/${image}`, {
+
+			fetch(`https://inventory-ai.onrender.com/calculate?condition=${condition}&start=https://inventory-ai.onrender.com/user-images/${image}`, {
 					method: "POST",
 					body: JSON.stringify(results)
 				})
