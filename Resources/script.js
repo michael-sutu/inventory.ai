@@ -236,12 +236,18 @@ document.querySelector(".getValueBtn").addEventListener("click", (e) => {
     })
         .then(response => response.json())
         .then(data => {
-            newMin = data.min
-            newMax = data.max
-            newImage = data.image
-            document.querySelector(".estimate").textContent = `Estimated Value: $${data.min} - $${data.max}`
-            renderFrame("11")
-            displayLoading("none")
+			if(data.Code == 200) {
+				newMin = data.min
+            	newMax = data.max
+            	newImage = data.image
+            	document.querySelector(".estimate").textContent = `Estimated Value: $${data.min} - $${data.max}`
+            	renderFrame("11")
+            	displayLoading("none")
+			} else {
+				alert(data.Error)
+				renderFrame("4")
+				displayLoading("none")
+			}
         })
 })
 
