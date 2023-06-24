@@ -219,12 +219,16 @@ app.post("/api/get-value", type, (req, res) => {
             }
         })
         .then(function(data) {
-            let results = []
-            let items = data.findCompletedItemsResponse[0].searchResult[0].item
+			try {
+				let results = []
+            	let items = data.findCompletedItemsResponse[0].searchResult[0].item
 
-            for(let i = 0; i < items.length; i++) {
-				results.push({"Name": items[i].title, "Price": items[i].sellingStatus[0].currentPrice[0].__value__, "Image": items[i].galleryURL})
-            }
+            	for(let i = 0; i < items.length; i++) {
+					results.push({"Name": items[i].title, "Price": items[i].sellingStatus[0].currentPrice[0].__value__, "Image": items[i].galleryURL})
+            	}
+			} catch(error) {
+				res.json({"Code": 400, "Error": error})
+			}
 
 			fetch(`https://feature-matching.onrender.com?condition=${condition}&start=https://inventory-ai.onrender.com/user-images/${image}`, {
 			//fetch(`http://127.0.0.1:5000?condition=${condition}&start=http://localhost:1000/user-images/${image}`, {
