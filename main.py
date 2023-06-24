@@ -6,6 +6,7 @@ import random
 import json
 import traceback
 
+print("main.py is online")
 detector = cv2.SIFT_create()
 
 app = Flask(__name__)
