@@ -271,6 +271,6 @@ document.getElementById("deleteBtn").addEventListener("click", (e) => {
         })
 })
 
-document.querySelector(".alertClose").addEventListener("click", (e) => {
+document.querySelector(".alert").addEventListener("click", (e) => {
 	document.querySelector(".alert").style.display = "none"
 })
