@@ -4,6 +4,7 @@ function renderFrame(newFrameId) {
 	document.getElementById(currentFrame).style.display = "none"
 	document.getElementById(newFrameId).style.display = "block"
 	currentFrame = newFrameId
+  document.querySelector(".alert").style.display = "none"
 
 	document.querySelectorAll("input").forEach((e) => {
 		e.value = ""
