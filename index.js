@@ -162,7 +162,7 @@ app.post("/api/inventory", type, async (req, res) => {
 app.get("/api/save-item", async (req, res) => {
     try {
         let updatedOwns = []
-		let newQuantity = 0
+		let newQuantity = 1
 		if(req.query.quantity !== "") {
 			newQuantity = req.query.quantity
 		}
