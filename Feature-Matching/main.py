@@ -1,7 +1,12 @@
+import os
+os.system("pip3 install Flask")
+os.system("pip3 install opencv-python")
+os.system("pip3 install urllib3")
+os.system("pip3 install gunicorn")
+
 import cv2
 from flask import Flask, request, jsonify
 import urllib.request
-import os
 import random
 import json
 import traceback
