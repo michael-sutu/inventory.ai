@@ -162,12 +162,16 @@ app.post("/api/inventory", type, async (req, res) => {
 app.get("/api/save-item", async (req, res) => {
     try {
         let updatedOwns = []
+		let newQuantity = 0
+		if(req.query.quantity !== "") {
+			newQuantity = req.query.quantity
+		}
 		let newItem = {
 			"Image": req.query.image,
 			"Name": req.query.name,
 			"Min": req.query.min,
             "Max": req.query.max,
-            "Quantity": req.query.quantity,
+            "Quantity": newQuantity,
             "Condition": req.query.condition
 		}
 		await client.connect()
