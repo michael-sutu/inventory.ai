@@ -12,7 +12,7 @@ app.listen(1000)
 console.log("Listening at http://localhost:1000")
 
 concurrently([
-	{ command: 'python main.py', name: 'Flask Server', prefixColor: 'cyan' } // gunicorn main:app
+	{ command: 'cd Feature-Matching && gunicorn main:app', name: 'Flask Server', prefixColor: 'cyan' } // gunicorn main:app
 ])
 
 let storage = multer.diskStorage({
