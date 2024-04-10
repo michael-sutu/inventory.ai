@@ -24,7 +24,7 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage })
 let type = upload.single('upl')
 
-const url = "mongodb+srv://michaelsutu:AJV95ixy12LSkBfA@inventoryai.1lwuiqu.mongodb.net/?retryWrites=true&w=majority"
+const url = "MONGO_URL_HERE"
 const client = new MongoClient(url)
 
 function sendF(file, res) {
