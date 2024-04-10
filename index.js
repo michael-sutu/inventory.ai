@@ -197,7 +197,7 @@ app.post("/api/get-value", type, (req, res) => {
     let image = req.file.filename
 
     let url = 'https://svcs.ebay.com/services/search/FindingService/v1'
-    let appID = 'MichaelS-inventor-PRD-f95f6f890-8fec23b2'
+    let appID = 'EBAY_APP_ID'
     let request = {
         'OPERATION-NAME': 'findCompletedItems',
         'SERVICE-VERSION': '1.13.0',
